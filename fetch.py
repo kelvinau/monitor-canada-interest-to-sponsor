@@ -29,7 +29,7 @@ def main():
             print ("No difference")
         else:
             print ("Has difference")
-            send_notificaiton(email)
+            send_notificaiton(from_email, to_email)
 
 def send_notificaiton(from_email, to_email):
     print ("Sending email to " + to_email)
