@@ -12,7 +12,8 @@ def main():
     config = configparser.ConfigParser()
     config.read(CONFIG_FILE)
     try:
-        email = config["DEFAULT"]["EMAIL"]
+        from_email = config["EMAIL"]["FROM"]
+        to_email = config["EMAIL"]["TO"]
     except:
         print ("Config file or key not found")
     else:
@@ -30,18 +31,18 @@ def main():
             print ("Has difference")
             send_notificaiton(email)
 
-def send_notificaiton(to_email):
+def send_notificaiton(from_email, to_email):
     print ("Sending email to " + to_email)
     import smtplib
     from email.message import EmailMessage
 
     msg = EmailMessage()
     msg["Subject"] = "Difference of Canadian Interest to Sponsor form detected"
-    #  msg['From'] = me
+    msg["From"] = from_email
     msg["To"] = to_email
-    msg.set_content("Possible that the availability of Interest to Sponsor form changes. Check the form at " + URL)
+    msg.set_content("Possible that the availability of Interest to Sponsor form changes.\nCheck the form at " + URL)
 
-    s = smtplib.SMTP('localhost')
+    s = smtplib.SMTP("localhost")
     s.send_message(msg)
     s.quit()
 
