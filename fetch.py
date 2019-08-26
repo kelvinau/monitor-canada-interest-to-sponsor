@@ -2,6 +2,8 @@ URL = "https://www.canada.ca/en/immigration-refugees-citizenship/services/immigr
 CONFIG_FILE = "config.ini"
 CACHED_FILE = "cached-website.html"
 
+SEARCH_STRING = "The interest to sponsor form 2019 is closed right now"
+
 import sys
 import urllib.request
 import configparser
@@ -22,13 +24,13 @@ def main():
         website_content = website_bytes.decode("utf8")
         fp.close()
 
-        cached_file = open(CACHED_FILE, "r", newline='')
-        cached_content = cached_file.read()
+        #cached_file = open(CACHED_FILE, "r", newline='')
+        #cached_content = cached_file.read()
 
-        if (website_content == cached_content):
-            print ("No difference")
+        if (SEARCH_STRING in website_content):
+            print ("SEARCH_STRING found")
         else:
-            print ("Has difference")
+            print ("SEARCH_STRING not found")
             send_notificaiton(from_email, to_email)
 
 def send_notificaiton(from_email, to_email):
